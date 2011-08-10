@@ -5,10 +5,14 @@
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$isSolved$1.class
+/Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$unsolvedIndexes$2.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/SolverMain$.class
+/Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$solve$1.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$cols$1.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$getCol$1.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$isSolved$2$$anonfun$apply$2.class
+/Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$unsolvedIndexes$1.class
+/Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$solve$1$$anonfun$apply$mcVI$sp$1.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$isSolved$1$$anonfun$apply$1.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/Board$$anonfun$isSolved$2.class
 /Users/robert/code/scala-doku/src/com/robert_gay/scala/sudoku/SolverMain.scala -> /Users/robert/code/scala-doku/bin/com/robert_gay/scala/sudoku/SolverMain.class

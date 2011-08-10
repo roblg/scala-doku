@@ -10,8 +10,12 @@ class Board(val initialData:Seq[Seq[Int]]) {
   // mutable boardData variable holding the current state
   var boardData = initialData
   
-  def solve = {
-    true
+  def solve() {
+    for (rowIdx <- 0 to 8) {
+      for (colIdx <- unsolvedIndexes(getRow(rowIdx))) {
+        // TODO
+      }
+    }
   }
   
   def isSolved = {
@@ -20,12 +24,36 @@ class Board(val initialData:Seq[Seq[Int]]) {
     // TODO include section here
   }
   
+  def unsolvedIndexes(colOrRow:Seq[Int]) = {
+    colOrRow.zip(0 to 8).		// pair up the values with their indexes
+    	filter(p => p._1 > 0).	// remove the ones with the values == 0
+    	map(p => p._2)			// just return the indexes
+  }
+  
+  def unusedVals(colOrRow:Seq[Int]) = {
+    // TODO 
+    (0 to 8).toSet -- colOrRow
+  }
+  
+  /*
+  // My implementation, before I found Seq[A].updated(...)
+  def boardWithVal2(r:Int, c:Int, v:Int) = {
+   	val (r_lh, r_rh) = boardData.splitAt(r)
+    val (c_lh, c_rh) = r_rh.head.splitAt(c)
+    r_lh ++ ((c_lh ++ (v +: c_rh.tail)) +: r_rh.tail)
+  }
+  */
+  
+  def boardWithVal(r:Int, c:Int, v:Int) = {
+    boardData.updated(r, boardData(r).updated(c, v))
+  }
+  
   def rows = {
     boardData
   }
   
   def cols = {
-    (0 until 9).foldLeft(Seq[Seq[Int]]()) {
+    (0 to 8).foldLeft(Seq[Seq[Int]]()) {
       (acc, idx) => (acc :+ getCol(idx))
     }
   }
@@ -35,7 +63,7 @@ class Board(val initialData:Seq[Seq[Int]]) {
   }
   
   def getCol(i:Int) = {
-    // TODO this could be expensive
+    // TODO this could be expensive?
     boardData.foldLeft(Seq[Int]()) {
       (acc, row) => (acc :+ row(i))
     }
@@ -94,6 +122,13 @@ object SolverMain {
     println(b.cols)
     println("Solved b1: " + b.isSolved)
     println("Solved b2: " + b2.isSolved)
+    
+    println(b.boardWithVal(0,0,37))
+    // println(b.boardWithVal2(0,0,37))
+    
+    println(b.boardWithVal(3,4,37))
+    // println(b.boardWithVal2(3,4,37))
+    
     
   }
 }

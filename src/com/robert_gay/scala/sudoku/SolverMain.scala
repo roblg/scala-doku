@@ -10,27 +10,23 @@ class Board(val initialData:Seq[Seq[Int]]) {
   // mutable boardData variable holding the current state
   var boardData = initialData
   
-  def solve() {
-    for (rowIdx <- 0 to 8) {
-      for (colIdx <- unsolvedIndexes(getRow(rowIdx))) {
-        // TODO
-      }
-    }
-  }
-  
   def isSolved = {
     cols.forall(c => c.forall(v => v > 0)) && 
     		rows.forall(r => r.forall(v => v > 0))
     // TODO include section here
   }
   
-  def unsolvedIndexes(colOrRow:Seq[Int]) = {
+  private def unsolvedIndexes(colOrRow:Seq[Int]) = {
     colOrRow.zip(0 to 8).		// pair up the values with their indexes
     	filter(p => p._1 > 0).	// remove the ones with the values == 0
     	map(p => p._2)			// just return the indexes
   }
   
-  def unusedVals(colOrRow:Seq[Int]) = {
+  private def possibleVals(rowIdx:Int, colIdx:Int) = {
+    (unusedVals(getRow(rowIdx)) ++ unusedVals(getCol(colIdx)))
+  }
+  
+  private def unusedVals(colOrRow:Seq[Int]) = {
     // TODO 
     (0 to 8).toSet -- colOrRow
   }
@@ -44,8 +40,8 @@ class Board(val initialData:Seq[Seq[Int]]) {
   }
   */
   
-  def boardWithVal(r:Int, c:Int, v:Int) = {
-    boardData.updated(r, boardData(r).updated(c, v))
+  def setVal(r:Int, c:Int, v:Int) {
+    boardData = boardData.updated(r, boardData(r).updated(c, v))
   }
   
   def rows = {
@@ -69,8 +65,12 @@ class Board(val initialData:Seq[Seq[Int]]) {
     }
   }
   
+  def getSectForPos(r:Int,j:Int) = {
+    
+  }
+  
   def getSect(i:Int) = {
-    // TODO
+    
   }
   
 }
@@ -79,10 +79,28 @@ object Board {
   def apply(d:Seq[Seq[Int]]) = {
     new Board(d)
   }
+  
+  def solve(b:Board) {
+    for (r <- 0 to 8) {
+      for (c <- 0 to 8
+          if b.rows(r)(c) == 0) {
+        for (v <- b.possibleVals(r, c)) {
+          b.setVal(r,c,v)
+          solve(b)
+          if (b.isSolved) {
+            return
+          }
+          b.setVal(r,c,0)
+        }
+      }
+    }
+  }
+  
 }
 
 
 object SolverMain {
+  
   def main(args : Array[String]) : Unit = {
     
     // TODO test data. Read data from somewhere else here
@@ -118,15 +136,18 @@ object SolverMain {
     val b = Board(data)
     val b2 = Board(data2)
     
-    println(b.rows)
-    println(b.cols)
-    println("Solved b1: " + b.isSolved)
-    println("Solved b2: " + b2.isSolved)
-    
-    println(b.boardWithVal(0,0,37))
+//    println(b.rows)
+//    println(b.cols)
+//    println("Solved b1: " + b.isSolved)
+//    println("Solved b2: " + b2.isSolved)
+//    
+    // println(b.boardData)
     // println(b.boardWithVal2(0,0,37))
-    
-    println(b.boardWithVal(3,4,37))
+    	
+    println(b.rows)
+    Board.solve(b)
+    println(b.isSolved)
+    println(b.rows)
     // println(b.boardWithVal2(3,4,37))
     
     

@@ -1,4 +1,4 @@
-package com.robert_gay.scala.sudoku
+package com.roblg.scala.sudoku
  
 
 class Board(val initialData:Seq[Seq[Int]]) {

@@ -1,10 +1,5 @@
 package com.roblg.scala.sudoku
 
-import scala.collection.mutable.SetBuilder
-import scala.collection.mutable.Builder
-import scala.collection.mutable.HashSet
-import scala.collection.mutable.ListBuffer
-
 
 object SolverMain {
   
@@ -42,6 +37,7 @@ object SolverMain {
     
     val b = Board(data)
     val b2 = Board(data2)
-    println(Board.solve(b))
+    println(b)
+    println(b.solvedCopy)
   }
 }

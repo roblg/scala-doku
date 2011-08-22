@@ -4,9 +4,7 @@ import scala.collection.mutable.SetBuilder
 import scala.collection.mutable.Builder
 import scala.collection.mutable.HashSet
 import scala.collection.mutable.ListBuffer
- 
 
-case class BoardSect(r:Int, c:Int)
 
 class Board(val initialData:List[List[Int]]) {
   
@@ -15,7 +13,7 @@ class Board(val initialData:List[List[Int]]) {
   }
   
   // immutable boardData variable holding the state of this board
-  var boardData = initialData
+  val boardData = initialData
   
   def isSolved = {
     cols.forall(c => c.forall(v => v > 0)) && 
@@ -23,39 +21,16 @@ class Board(val initialData:List[List[Int]]) {
     		sects.forall(s => s.forall(v => v > 0))
   }
   
-  /*
-  def unsolvedIndexes(colOrRow:List[Int]) = {
-    colOrRow.zip(0 to 8).		// pair up the values with their indexes
-    	filter(p => p._1 > 0).	// remove the ones with the values == 0
-    	map(p => p._2)			// just return the indexes
-  }*/
-  
   def possibleVals(rowIdx:Int, colIdx:Int) = {
-	  if (rows(rowIdx)(colIdx) != 0) {
-	    Set()
-	  } else {
-	    val b = new HashSet[Int]
-	    b ++= (1 to 9).toSet
-	    b --= getRow(rowIdx)
-	    b --= getCol(colIdx)
-	    b --= getSect(getSectForPos(rowIdx, colIdx))
-	    b.toSet
-	  }
-	  
-	  // (1 to 9).toSet -- getRow(rowIdx) -- getCol(colIdx) -- getSect(getSectForPos(rowIdx, colIdx))
+    if (rows(rowIdx)(colIdx) != 0) {
+      Set()
+    } else {
+      (1 to 9).toSet -- getRow(rowIdx) -- getCol(colIdx) -- getSect(getSectForPos(rowIdx, colIdx))
+    }
   }
-  
-  /*
-  // My implementation, before I found Seq[A].updated(...)
-  def boardWithVal2(r:Int, c:Int, v:Int) = {
-   	val (r_lh, r_rh) = boardData.splitAt(r)
-    val (c_lh, c_rh) = r_rh.head.splitAt(c)
-    r_lh ++ ((c_lh ++ (v +: c_rh.tail)) +: r_rh.tail)
-  }
-  */
-  
-  def withVal(r:Int, c:Int, v:Int) {
-    boardData = boardData.updated(r, boardData(r).updated(c, v))
+
+  def withVal(r:Int, c:Int, v:Int) = {
+    Board(boardData.updated(r, boardData(r).updated(c, v)))
   }
   
   def rows = {
@@ -110,20 +85,14 @@ class Board(val initialData:List[List[Int]]) {
     val startRow = (i / 3) * 3
     val startCol = (i % 3) * 3
     
-    val b = ListBuffer[Int]()
-    b ++= getRow(startRow).slice(startCol, startCol + 3) 
-    b ++= getRow(startRow+1).slice(startCol, startCol + 3)
-    b ++= getRow(startRow+2).slice(startCol, startCol + 3)
-    b.toList
+    getRow(startRow).slice(startCol, startCol + 3) ++ 
+    	getRow(startRow+1).slice(startCol, startCol + 3) ++ 
+    	getRow(startRow+2).slice(startCol, startCol + 3)
+    	
   }
   
   override def toString = "[Board:" + rows.toString + "]"
   
-}
-
-class Pair(inX:Int, inY:Int) {
-  val x = inX
-  val y = inY  
 }
 
 object Board {
@@ -137,27 +106,26 @@ object Board {
     })
   }
   
-  def solve(b:Board) {
+  def solve(b:Board) : Board = {
     if (b.isSolved) {
-      println(b)
-      // throw new RuntimeException
-    }
-    
-    for (r <- 0 to 8) {
-      for (c <- 0 to 8
-          if b.rows(r)(c) == 0) {
-          val possibles = b.possibleVals(r,c)
-          // println(possibles)
-          for (v <- possibles) {
-            b.withVal(r, c, v)
-            solve(b)
-            b.withVal(r, c, 0)
-          }
-          return
-      }
+      return b
+    } else {
+	    for (r <- 0 to 8) {
+	      for (c <- 0 to 8
+	        if b.rows(r)(c) == 0) {
+	        val possibles = b.possibleVals(r,c)
+	        for (v <- possibles) {
+	          val newB = solve(b.withVal(r,c,v))
+	          if (null != newB && newB.isSolved) {
+	            return newB
+	          }
+	        }
+	        return null
+	      }
+	    }
+	    return null;
     }
   }
-  
 }
 
 
@@ -209,7 +177,7 @@ object SolverMain {
     //println(b2.getSect(5))
     
 //    println(b.rows)
-    Board.solve(b)
+    println(Board.solve(b))
     //println(b.possibleVals(8,8))
     //println(Board.solve(b).rows)
 //    
